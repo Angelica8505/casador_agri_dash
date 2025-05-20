@@ -6,10 +6,11 @@ const port = 3000;
 
 // MySQL connection pool
 const db = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '', // Change if your XAMPP MySQL has a password
-  database: 'agricultural_dashboard'
+  host: process.env.MYSQLHOST || 'localhost',
+  user: process.env.MYSQLUSER || 'root',
+  password: process.env.MYSQLPASSWORD || '',
+  database: process.env.MYSQLDATABASE || 'agricultural_dashboard',
+  port: process.env.MYSQLPORT || 3306
 });
 
 // Middleware

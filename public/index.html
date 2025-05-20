@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
             background: linear-gradient(120deg, #f4f8f4 60%, #e8f5e9 100%);
@@ -35,6 +36,13 @@
             margin-bottom: 8px;
             padding: 0.7rem 1.2rem;
             transition: background 0.2s, color 0.2s;
+            height: 56px;
+            min-width: 180px;
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            box-sizing: border-box;
         }
         .sidebar .nav-link.active, .sidebar .nav-link:hover {
             background: #388e3c;
@@ -144,6 +152,35 @@
                 margin-right: 0;
             }
         }
+        /* Hide all tab panes by default, show only the active one */
+        .tab-pane {
+            display: none;
+        }
+        .tab-pane.show.active {
+            display: block;
+        }
+        /* Set constant height for tab content area */
+        .tab-content {
+            min-height: 900px;
+            max-height: 900px;
+            overflow: hidden;
+        }
+        .tab-pane {
+            min-height: 900px;
+            max-height: 900px;
+            width: 100%;
+            overflow-y: auto;
+        }
+        @media (max-width: 991px) {
+            .tab-content {
+                min-height: 600px;
+                max-height: 600px;
+            }
+            .tab-pane {
+                min-height: 600px;
+                max-height: 600px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -154,18 +191,26 @@
             <div class="sidebar-header">
                 <i class="bi bi-flower1"></i> Agri Dashboard
             </div>
-            <ul class="nav flex-column px-3 mt-4">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#"><i class="bi bi-house-door me-2"></i>Overview</a>
+            <ul class="nav flex-column px-3 mt-4" id="dashboardTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab" aria-controls="overview" aria-selected="true">
+                        <i class="bi bi-house-door me-2"></i>Overview
+                    </button>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-bar-chart-steps me-2"></i>Sales Analytics</a>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="analytics-tab" data-bs-toggle="tab" data-bs-target="#analytics" type="button" role="tab" aria-controls="analytics" aria-selected="false">
+                        <i class="bi bi-bar-chart-steps me-2"></i>Sales Analytics
+                    </button>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-box2-heart me-2"></i>Inventory</a>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="inventory-tab" data-bs-toggle="tab" data-bs-target="#inventory" type="button" role="tab" aria-controls="inventory" aria-selected="false">
+                        <i class="bi bi-box2-heart me-2"></i>Inventory
+                    </button>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-truck-flatbed me-2"></i>Deliveries</a>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="deliveries-tab" data-bs-toggle="tab" data-bs-target="#deliveries" type="button" role="tab" aria-controls="deliveries" aria-selected="false">
+                        <i class="bi bi-truck-flatbed me-2"></i>Deliveries
+                    </button>
                 </li>
             </ul>
         </nav>
@@ -177,76 +222,246 @@
                     <i class="bi bi-tree-fill me-2"></i> Agricultural Data Analytics
                 </div>
             </div>
-            <!-- Summary Cards -->
-            <div class="row summary-row mb-4 flex-nowrap">
-                <div class="col-md-3 col-6 d-flex justify-content-center">
-                    <div class="summary-card">
-                        <span class="summary-icon" style="background:rgba(255,255,255,0.18);color:#388e3c;"><i class="bi bi-currency-dollar"></i></span>
-                        <div>
-                            <div class="summary-label">Total Sales</div>
-                            <div class="summary-value" id="totalSales">₱0.00</div>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="dashboardTabContent">
+                <!-- Overview Tab -->
+                <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                    <!-- Existing overview content -->
+                    <!-- Summary Cards -->
+                    <div class="row summary-row mb-4 flex-nowrap">
+                        <div class="col-md-3 col-6 d-flex justify-content-center">
+                            <div class="summary-card">
+                                <span class="summary-icon" style="background:rgba(255,255,255,0.18);color:#388e3c;"><i class="bi bi-currency-dollar"></i></span>
+                                <div>
+                                    <div class="summary-label">Total Sales</div>
+                                    <div class="summary-value" id="totalSales">₱0.00</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 d-flex justify-content-center">
+                            <div class="summary-card">
+                                <span class="summary-icon" style="background:rgba(255,255,255,0.18);color:#689f38;"><i class="bi bi-box-seam"></i></span>
+                                <div>
+                                    <div class="summary-label">Products in Stock</div>
+                                    <div class="summary-value" id="totalProducts">0</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 d-flex justify-content-center">
+                            <div class="summary-card">
+                                <span class="summary-icon" style="background:rgba(255,255,255,0.18);color:#fbc02d;"><i class="bi bi-truck"></i></span>
+                                <div>
+                                    <div class="summary-label">Pending Deliveries</div>
+                                    <div class="summary-value" id="totalDeliveries">0</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 d-flex justify-content-center">
+                            <div class="summary-card">
+                                <span class="summary-icon" style="background:rgba(255,255,255,0.18);color:#43a047;"><i class="bi bi-bar-chart-line"></i></span>
+                                <div>
+                                    <div class="summary-label">Growth Rate</div>
+                                    <div class="summary-value" id="growthRate">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Charts and Tables -->
+                    <div class="row g-2 justify-content-center">
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100" style="max-width: 650px;">
+                                <h5><i class="bi bi-bar-chart-steps"></i> Sales Trends</h5>
+                                <div class="chart-container">
+                                    <canvas id="salesChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100" style="max-width: 650px;">
+                                <h5><i class="bi bi-box2-heart"></i> Inventory Status</h5>
+                                <div class="chart-container">
+                                    <canvas id="inventoryChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100" style="max-width: 650px;">
+                                <h5><i class="bi bi-truck-flatbed"></i> Delivery Status</h5>
+                                <div class="chart-container">
+                                    <canvas id="deliveryChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100" style="max-width: 650px;">
+                                <h5><i class="bi bi-flower1"></i> Growth Forecast</h5>
+                                <div class="chart-container">
+                                    <canvas id="growthChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-6 d-flex justify-content-center">
-                    <div class="summary-card">
-                        <span class="summary-icon" style="background:rgba(255,255,255,0.18);color:#689f38;"><i class="bi bi-box-seam"></i></span>
-                        <div>
-                            <div class="summary-label">Products in Stock</div>
-                            <div class="summary-value" id="totalProducts">0</div>
+
+                <!-- Analytics Tab -->
+                <div class="tab-pane fade" id="analytics" role="tabpanel" aria-labelledby="analytics-tab">
+                    <div class="row g-2 justify-content-center">
+                        <!-- Sales Performance -->
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100">
+                                <h5><i class="bi bi-graph-up"></i> Sales Performance</h5>
+                                <div class="chart-container">
+                                    <canvas id="salesPerformanceChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Revenue Analysis -->
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100">
+                                <h5><i class="bi bi-currency-dollar"></i> Revenue Analysis</h5>
+                                <div class="chart-container">
+                                    <canvas id="revenueAnalysisChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product Performance -->
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100">
+                                <h5><i class="bi bi-box-seam"></i> Top Performing Products</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Sales</th>
+                                                <th>Revenue</th>
+                                                <th>Growth</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="topProductsTable">
+                                            <!-- Will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Market Trends -->
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100">
+                                <h5><i class="bi bi-trending-up"></i> Market Trends</h5>
+                                <div class="chart-container">
+                                    <canvas id="marketTrendsChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-6 d-flex justify-content-center">
-                    <div class="summary-card">
-                        <span class="summary-icon" style="background:rgba(255,255,255,0.18);color:#fbc02d;"><i class="bi bi-truck"></i></span>
-                        <div>
-                            <div class="summary-label">Pending Deliveries</div>
-                            <div class="summary-value" id="totalDeliveries">0</div>
+
+                <!-- Inventory Tab -->
+                <div class="tab-pane fade" id="inventory" role="tabpanel" aria-labelledby="inventory-tab">
+                    <div class="row g-2 justify-content-center">
+                        <!-- Stock Levels -->
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100">
+                                <h5><i class="bi bi-box-seam"></i> Current Stock Levels</h5>
+                                <div class="chart-container">
+                                    <canvas id="stockLevelsChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Low Stock Alert -->
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100">
+                                <h5><i class="bi bi-exclamation-triangle"></i> Low Stock Alert</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Current Stock</th>
+                                                <th>Reorder Level</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="lowStockTable">
+                                            <!-- Will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Category Distribution -->
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100">
+                                <h5><i class="bi bi-pie-chart"></i> Category Distribution</h5>
+                                <div class="chart-container">
+                                    <canvas id="categoryDistributionChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Stock Movement -->
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100">
+                                <h5><i class="bi bi-arrow-left-right"></i> Stock Movement</h5>
+                                <div class="chart-container">
+                                    <canvas id="stockMovementChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-6 d-flex justify-content-center">
-                    <div class="summary-card">
-                        <span class="summary-icon" style="background:rgba(255,255,255,0.18);color:#43a047;"><i class="bi bi-bar-chart-line"></i></span>
-                        <div>
-                            <div class="summary-label">Growth Rate</div>
-                            <div class="summary-value" id="growthRate">0%</div>
+
+                <!-- Deliveries Tab -->
+                <div class="tab-pane fade" id="deliveries" role="tabpanel" aria-labelledby="deliveries-tab">
+                    <div class="row g-2 justify-content-center">
+                        <!-- Delivery Status -->
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100">
+                                <h5><i class="bi bi-truck"></i> Delivery Status Overview</h5>
+                                <div class="chart-container">
+                                    <canvas id="deliveryStatusChart"></canvas>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Charts and Tables -->
-            <div class="row g-2 justify-content-center">
-                <div class="col-lg-6 col-md-8 d-flex justify-content-center">
-                    <div class="dashboard-card w-100" style="max-width: 650px;">
-                        <h5><i class="bi bi-bar-chart-steps"></i> Sales Trends</h5>
-                        <div class="chart-container">
-                            <canvas id="salesChart"></canvas>
+                        <!-- Active Deliveries -->
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100">
+                                <h5><i class="bi bi-truck-flatbed"></i> Active Deliveries</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Customer</th>
+                                                <th>Status</th>
+                                                <th>ETA</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="activeDeliveriesTable">
+                                            <!-- Will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-8 d-flex justify-content-center">
-                    <div class="dashboard-card w-100" style="max-width: 650px;">
-                        <h5><i class="bi bi-box2-heart"></i> Inventory Status</h5>
-                        <div class="chart-container">
-                            <canvas id="inventoryChart"></canvas>
+                        <!-- Delivery Performance -->
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100">
+                                <h5><i class="bi bi-speedometer2"></i> Delivery Performance</h5>
+                                <div class="chart-container">
+                                    <canvas id="deliveryPerformanceChart"></canvas>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-8 d-flex justify-content-center">
-                    <div class="dashboard-card w-100" style="max-width: 650px;">
-                        <h5><i class="bi bi-truck-flatbed"></i> Delivery Status</h5>
-                        <div class="chart-container">
-                            <canvas id="deliveryChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-8 d-flex justify-content-center">
-                    <div class="dashboard-card w-100" style="max-width: 650px;">
-                        <h5><i class="bi bi-flower1"></i> Growth Forecast</h5>
-                        <div class="chart-container">
-                            <canvas id="growthChart"></canvas>
+                        <!-- Route Optimization -->
+                        <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                            <div class="dashboard-card w-100">
+                                <h5><i class="bi bi-map"></i> Route Optimization</h5>
+                                <div class="chart-container">
+                                    <canvas id="routeOptimizationChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -256,50 +471,20 @@
 </div>
 <script>
     // Fetch summary data
-    fetch('/api/dashboard')
-        .then(response => response.json())
-        .then(data => {
-            // Total Sales
-            const totalSales = data.summary.totalSales;
-            const totalSalesElem = document.getElementById('totalSales');
-            if (!totalSales || totalSales === 0) {
-                totalSalesElem.textContent = 'No data';
-                totalSalesElem.parentElement.parentElement.style.opacity = 0.5;
-            } else {
-                totalSalesElem.textContent = '₱' + totalSales.toLocaleString(undefined, {minimumFractionDigits:2});
-                totalSalesElem.parentElement.parentElement.style.opacity = 1;
-            }
-            // Products in Stock
-            const totalProducts = data.summary.totalProducts;
-            const totalProductsElem = document.getElementById('totalProducts');
-            if (!totalProducts || totalProducts === 0) {
-                totalProductsElem.textContent = 'No data';
-                totalProductsElem.parentElement.parentElement.style.opacity = 0.5;
-            } else {
-                totalProductsElem.textContent = totalProducts;
-                totalProductsElem.parentElement.parentElement.style.opacity = 1;
-            }
-            // Pending Deliveries
-            const totalDeliveries = data.summary.totalDeliveries;
-            const totalDeliveriesElem = document.getElementById('totalDeliveries');
-            if (!totalDeliveries || totalDeliveries === 0) {
-                totalDeliveriesElem.textContent = 'No data';
-                totalDeliveriesElem.parentElement.parentElement.style.opacity = 0.5;
-            } else {
-                totalDeliveriesElem.textContent = totalDeliveries;
-                totalDeliveriesElem.parentElement.parentElement.style.opacity = 1;
-            }
-            // Growth Rate
-            const growthRate = data.summary.growthRate;
-            const growthRateElem = document.getElementById('growthRate');
-            if (!growthRate || growthRate === 0) {
-                growthRateElem.textContent = 'No data';
-                growthRateElem.parentElement.parentElement.style.opacity = 0.5;
-            } else {
-                growthRateElem.textContent = growthRate + '%';
-                growthRateElem.parentElement.parentElement.style.opacity = 1;
-            }
-        });
+    async function fetchDashboardSummary() {
+        try {
+            const response = await fetch('/api/dashboard');
+            const data = await response.json();
+            
+            // Update summary cards
+            document.getElementById('totalSales').textContent = '₱' + data.summary.totalSales.toLocaleString(undefined, {minimumFractionDigits:2});
+            document.getElementById('totalProducts').textContent = data.summary.totalProducts;
+            document.getElementById('totalDeliveries').textContent = data.summary.totalDeliveries;
+            document.getElementById('growthRate').textContent = data.summary.growthRate + '%';
+        } catch (error) {
+            console.error('Error fetching dashboard summary:', error);
+        }
+    }
 
     // Sales Trends Chart
     fetch('/api/sales/trends')
@@ -452,6 +637,292 @@
                 }
             });
         });
+
+    // Analytics Tab Charts
+    async function initializeAnalyticsCharts() {
+        try {
+            // Sales Performance Chart
+            const salesResponse = await fetch('/api/sales/trends');
+            const salesData = await salesResponse.json();
+            
+            const salesPerformanceCtx = document.getElementById('salesPerformanceChart');
+            new Chart(salesPerformanceCtx, {
+                type: 'line',
+                data: {
+                    labels: salesData.labels,
+                    datasets: [{
+                        label: 'Sales Performance',
+                        data: salesData.data,
+                        borderColor: '#388e3c',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Revenue Analysis Chart
+            const revenueAnalysisCtx = document.getElementById('revenueAnalysisChart');
+            new Chart(revenueAnalysisCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [12000, 19000, 15000, 25000],
+                        backgroundColor: '#8bc34a'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Top Performing Products
+            const productsResponse = await fetch('/api/products');
+            const productsData = await productsResponse.json();
+            
+            const topProductsTable = document.getElementById('topProductsTable');
+            topProductsTable.innerHTML = productsData
+                .sort((a, b) => b.quantity_in_stock - a.quantity_in_stock)
+                .slice(0, 5)
+                .map(product => `
+                    <tr>
+                        <td>${product.product_name}</td>
+                        <td>${product.quantity_in_stock}</td>
+                        <td>₱${product.unit_price}</td>
+                        <td>${product.category}</td>
+                    </tr>
+                `).join('');
+
+            // Market Trends Chart
+            const marketTrendsCtx = document.getElementById('marketTrendsChart');
+            new Chart(marketTrendsCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Market Share', 'Customer Growth', 'Product Range', 'Competition', 'Pricing'],
+                    datasets: [{
+                        label: 'Current',
+                        data: [65, 75, 70, 80, 60],
+                        backgroundColor: 'rgba(56,142,60,0.2)',
+                        borderColor: '#388e3c'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        } catch (error) {
+            console.error('Error initializing analytics charts:', error);
+        }
+    }
+
+    // Inventory Tab Charts
+    async function initializeInventoryCharts() {
+        try {
+            // Stock Levels Chart
+            const inventoryResponse = await fetch('/api/inventory/status');
+            const inventoryData = await inventoryResponse.json();
+            
+            const stockLevelsCtx = document.getElementById('stockLevelsChart');
+            new Chart(stockLevelsCtx, {
+                type: 'bar',
+                data: {
+                    labels: inventoryData.products.map(p => p.name),
+                    datasets: [{
+                        label: 'Current Stock',
+                        data: inventoryData.products.map(p => p.quantity),
+                        backgroundColor: '#8bc34a'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Low Stock Alert Table
+            const lowStockTable = document.getElementById('lowStockTable');
+            lowStockTable.innerHTML = inventoryData.products
+                .filter(p => p.quantity < 50) // Assuming 50 is the reorder level
+                .map(product => `
+                    <tr>
+                        <td>${product.name}</td>
+                        <td>${product.quantity}</td>
+                        <td>50</td>
+                        <td><span class="badge bg-danger">Low Stock</span></td>
+                    </tr>
+                `).join('');
+
+            // Category Distribution Chart
+            const productsResponse = await fetch('/api/products');
+            const productsData = await productsResponse.json();
+            
+            const categoryCounts = productsData.reduce((acc, product) => {
+                acc[product.category] = (acc[product.category] || 0) + 1;
+                return acc;
+            }, {});
+
+            const categoryDistributionCtx = document.getElementById('categoryDistributionChart');
+            new Chart(categoryDistributionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(categoryCounts),
+                    datasets: [{
+                        data: Object.values(categoryCounts),
+                        backgroundColor: ['#8bc34a', '#4caf50', '#388e3c', '#2e7d32']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Stock Movement Chart
+            const stockMovementCtx = document.getElementById('stockMovementChart');
+            new Chart(stockMovementCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Stock Movement',
+                        data: [65, 59, 80, 81, 56, 55],
+                        borderColor: '#388e3c',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        } catch (error) {
+            console.error('Error initializing inventory charts:', error);
+        }
+    }
+
+    // Deliveries Tab Charts
+    async function initializeDeliveryCharts() {
+        try {
+            // Delivery Status Chart
+            const deliveryResponse = await fetch('/api/deliveries/status');
+            const deliveryData = await deliveryResponse.json();
+            
+            const deliveryStatusCtx = document.getElementById('deliveryStatusChart');
+            new Chart(deliveryStatusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pending', 'In Transit', 'Delivered'],
+                    datasets: [{
+                        data: [deliveryData.pending, deliveryData.inTransit, deliveryData.delivered],
+                        backgroundColor: ['#ffa726', '#42a5f5', '#66bb6a']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Active Deliveries Table
+            const activeDeliveriesTable = document.getElementById('activeDeliveriesTable');
+            const recentSalesResponse = await fetch('/api/sales/recent');
+            const recentSalesData = await recentSalesResponse.json();
+            
+            activeDeliveriesTable.innerHTML = recentSalesData
+                .slice(0, 5)
+                .map(sale => `
+                    <tr>
+                        <td>${sale.transaction_id}</td>
+                        <td>${sale.product_name}</td>
+                        <td><span class="badge bg-warning">In Transit</span></td>
+                        <td>${new Date(sale.transaction_date).toLocaleDateString()}</td>
+                    </tr>
+                `).join('');
+
+            // Delivery Performance Chart
+            const deliveryPerformanceCtx = document.getElementById('deliveryPerformanceChart');
+            new Chart(deliveryPerformanceCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Deliveries',
+                        data: [12, 19, 15, 17, 22, 25, 18],
+                        borderColor: '#388e3c',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Route Optimization Chart
+            const routeOptimizationCtx = document.getElementById('routeOptimizationChart');
+            new Chart(routeOptimizationCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Route 1', 'Route 2', 'Route 3', 'Route 4'],
+                    datasets: [{
+                        label: 'Efficiency Score',
+                        data: [85, 72, 90, 78],
+                        backgroundColor: '#8bc34a'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        } catch (error) {
+            console.error('Error initializing delivery charts:', error);
+        }
+    }
+
+    // Initialize all charts when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchDashboardSummary();
+        initializeAnalyticsCharts();
+        initializeInventoryCharts();
+        initializeDeliveryCharts();
+
+        // Tab switching logic
+        const tabButtons = document.querySelectorAll('[data-bs-toggle="tab"]');
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-selected', 'false');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
+                
+                // Show the corresponding tab content
+                const targetId = this.getAttribute('data-bs-target');
+                const targetTab = document.querySelector(targetId);
+                
+                // Hide all tab panes
+                document.querySelectorAll('.tab-pane').forEach(pane => {
+                    pane.classList.remove('show', 'active');
+                });
+                
+                // Show the target tab pane
+                targetTab.classList.add('show', 'active');
+            });
+        });
+    });
 </script>
 </body>
 </html>
