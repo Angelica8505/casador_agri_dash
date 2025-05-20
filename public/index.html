@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agri Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -11,7 +11,6 @@
         body {
             background: linear-gradient(120deg, #f4f8f4 60%, #e8f5e9 100%);
             font-family: 'Segoe UI', Arial, sans-serif;
-            overflow-x: hidden;
         }
         .sidebar {
             background: linear-gradient(180deg, #205225 80%, #4caf50 100%);
@@ -19,19 +18,11 @@
             color: #fff;
             padding: 0;
             box-shadow: 2px 0 8px rgba(32,82,37,0.06);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-        }
-        .sidebar.show {
-            transform: translateX(0);
         }
         .sidebar .sidebar-header {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: bold;
-            padding: 1.5rem 1rem 1rem 1rem;
+            padding: 2rem 1rem 1rem 1rem;
             display: flex;
             align-items: center;
             gap: 0.7rem;
@@ -55,82 +46,69 @@
         .topbar {
             background: #fff;
             border-bottom: 1px solid #e0e0e0;
-            padding: 1rem;
+            padding: 1.2rem 2rem 1.2rem 2rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-radius: 0 0 18px 18px;
             box-shadow: 0 2px 8px rgba(36,92,42,0.03);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 999;
-        }
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: #388e3c;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
         }
         .summary-row {
             justify-content: center;
             gap: 0.5rem;
-            margin: 1rem 0;
-            padding: 0 0.5rem;
+            margin-left: 0;
+            margin-right: 0;
         }
         .summary-card {
             background: linear-gradient(120deg, #388e3c 60%, #a5d6a7 100%);
             color: #fff;
             border-radius: 18px;
-            padding: 1rem;
+            padding: 1.1rem 1.2rem;
             box-shadow: 0 2px 12px rgba(56, 142, 60, 0.10);
             display: flex;
             align-items: center;
             gap: 0.9rem;
-            min-width: 150px;
-            max-width: 100%;
+            min-width: 200px;
+            max-width: 260px;
             flex: 1 1 0;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0;
             border: 2px solid #e8f5e9;
         }
         .summary-icon {
-            font-size: 1.8rem;
+            font-size: 2.1rem;
             background: rgba(255,255,255,0.13);
             border-radius: 50%;
-            padding: 0.5rem;
+            padding: 0.7rem;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 8px rgba(56, 142, 60, 0.08);
         }
         .summary-label {
-            font-size: 0.9rem;
+            font-size: 1.08rem;
             opacity: 0.93;
             letter-spacing: 0.5px;
         }
         .summary-value {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: 600;
             letter-spacing: 0.5px;
         }
         .dashboard-card {
             background: #fff;
             border-radius: 18px;
-            padding: 1rem;
+            padding: 1.2rem 1.2rem 1.1rem 1.2rem;
             box-shadow: 0 2px 12px rgba(56, 142, 60, 0.09);
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             border: 2px solid #e8f5e9;
-            width: 100%;
+            min-width: 350px;
+            max-width: 650px;
         }
         .dashboard-card h5 {
-            font-size: 1rem;
+            font-size: 1.08rem;
             font-weight: 600;
             color: #205225;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
             letter-spacing: 0.5px;
             display: flex;
             align-items: center;
@@ -140,38 +118,30 @@
             color: #43a047;
         }
         .chart-container {
-            min-height: 200px;
-            height: 300px;
-            position: relative;
+            min-height: 260px;
+            height: 340px;
         }
-        .main-content {
-            margin-top: 4rem;
-            padding: 1rem;
+        .table th, .table td {
+            vertical-align: middle;
         }
         @media (max-width: 991px) {
-            .menu-toggle {
-                display: block;
-            }
             .sidebar {
-                width: 250px;
+                min-height: auto;
             }
-            .main-content {
-                margin-left: 0;
-            }
-            .summary-card {
-                min-width: 140px;
-            }
-            .chart-container {
-                min-height: 250px;
+            .summary-row {
+                gap: 0.5rem;
             }
         }
         @media (min-width: 992px) {
-            .sidebar {
-                transform: translateX(0);
-                width: 250px;
+            .summary-row {
+                flex-wrap: nowrap !important;
+                display: flex;
             }
-            .main-content {
-                margin-left: 250px;
+            .summary-card {
+                margin-right: 1.2rem;
+            }
+            .summary-card:last-child {
+                margin-right: 0;
             }
         }
     </style>
@@ -179,13 +149,8 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <!-- Mobile Menu Toggle -->
-        <button class="menu-toggle" id="menuToggle">
-            <i class="bi bi-list"></i>
-        </button>
-        
         <!-- Sidebar -->
-        <nav class="sidebar" id="sidebar">
+        <nav class="col-lg-2 col-md-3 d-md-block sidebar">
             <div class="sidebar-header">
                 <i class="bi bi-flower1"></i> Agri Dashboard
             </div>
@@ -204,84 +169,81 @@
                 </li>
             </ul>
         </nav>
-
         <!-- Main Content -->
-        <main class="main-content">
+        <main class="col-lg-10 col-md-9 ms-sm-auto px-4">
             <!-- Topbar -->
             <div class="topbar mb-4">
                 <div class="fw-bold text-success" style="font-size:1.1rem">
                     <i class="bi bi-tree-fill me-2"></i> Agricultural Data Analytics
                 </div>
             </div>
-
             <!-- Summary Cards -->
-            <div class="row summary-row">
-                <div class="col-6">
+            <div class="row summary-row mb-4 flex-nowrap">
+                <div class="col-md-3 col-6 d-flex justify-content-center">
                     <div class="summary-card">
                         <span class="summary-icon" style="background:rgba(255,255,255,0.18);color:#388e3c;"><i class="bi bi-currency-dollar"></i></span>
                         <div>
                             <div class="summary-label">Total Sales</div>
-                            <div class="summary-value" id="totalSales">₱1,257.25</div>
+                            <div class="summary-value" id="totalSales">₱0.00</div>
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-md-3 col-6 d-flex justify-content-center">
                     <div class="summary-card">
                         <span class="summary-icon" style="background:rgba(255,255,255,0.18);color:#689f38;"><i class="bi bi-box-seam"></i></span>
                         <div>
                             <div class="summary-label">Products in Stock</div>
-                            <div class="summary-value" id="totalProducts">4,050</div>
+                            <div class="summary-value" id="totalProducts">0</div>
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-md-3 col-6 d-flex justify-content-center">
                     <div class="summary-card">
                         <span class="summary-icon" style="background:rgba(255,255,255,0.18);color:#fbc02d;"><i class="bi bi-truck"></i></span>
                         <div>
                             <div class="summary-label">Pending Deliveries</div>
-                            <div class="summary-value" id="totalDeliveries">2</div>
+                            <div class="summary-value" id="totalDeliveries">0</div>
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-md-3 col-6 d-flex justify-content-center">
                     <div class="summary-card">
                         <span class="summary-icon" style="background:rgba(255,255,255,0.18);color:#43a047;"><i class="bi bi-bar-chart-line"></i></span>
                         <div>
                             <div class="summary-label">Growth Rate</div>
-                            <div class="summary-value" id="growthRate">15%</div>
+                            <div class="summary-value" id="growthRate">0%</div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Charts -->
-            <div class="row g-2">
-                <div class="col-12">
-                    <div class="dashboard-card">
+            <!-- Charts and Tables -->
+            <div class="row g-2 justify-content-center">
+                <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                    <div class="dashboard-card w-100" style="max-width: 650px;">
                         <h5><i class="bi bi-bar-chart-steps"></i> Sales Trends</h5>
                         <div class="chart-container">
                             <canvas id="salesChart"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="dashboard-card">
+                <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                    <div class="dashboard-card w-100" style="max-width: 650px;">
                         <h5><i class="bi bi-box2-heart"></i> Inventory Status</h5>
                         <div class="chart-container">
                             <canvas id="inventoryChart"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="dashboard-card">
+                <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                    <div class="dashboard-card w-100" style="max-width: 650px;">
                         <h5><i class="bi bi-truck-flatbed"></i> Delivery Status</h5>
                         <div class="chart-container">
                             <canvas id="deliveryChart"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="dashboard-card">
+                <div class="col-lg-6 col-md-8 d-flex justify-content-center">
+                    <div class="dashboard-card w-100" style="max-width: 650px;">
                         <h5><i class="bi bi-flower1"></i> Growth Forecast</h5>
                         <div class="chart-container">
                             <canvas id="growthChart"></canvas>
@@ -292,197 +254,204 @@
         </main>
     </div>
 </div>
-
 <script>
-    // Mobile menu toggle
-    document.getElementById('menuToggle').addEventListener('click', function() {
-        document.getElementById('sidebar').classList.toggle('show');
-    });
-
-    // Close sidebar when clicking outside on mobile
-    document.addEventListener('click', function(event) {
-        const sidebar = document.getElementById('sidebar');
-        const menuToggle = document.getElementById('menuToggle');
-        if (window.innerWidth < 992 && 
-            !sidebar.contains(event.target) && 
-            !menuToggle.contains(event.target)) {
-            sidebar.classList.remove('show');
-        }
-    });
-
-    // Sample data for charts
-    const sampleData = {
-        salesTrends: {
-            labels: ['3/1/2024', '3/2/2024', '3/3/2024', '3/4/2024', '3/5/2024', '3/6/2024', '3/7/2024'],
-            data: [150, 200, 180, 250, 220, 300, 280]
-        },
-        inventoryStatus: {
-            products: [
-                { name: 'Rice', quantity: 1500 },
-                { name: 'Corn', quantity: 2000 },
-                { name: 'Wheat', quantity: 800 },
-                { name: 'Soybeans', quantity: 1200 }
-            ]
-        },
-        deliveryStatus: {
-            pending: 2,
-            inTransit: 3,
-            delivered: 5
-        },
-        growthMetrics: {
-            labels: ['Sales Growth', 'Market Share', 'Customer Base', 'Product Range', 'Supply Chain'],
-            data: [80, 60, 70, 50, 65]
-        }
-    };
+    // Fetch summary data
+    fetch('/api/dashboard')
+        .then(response => response.json())
+        .then(data => {
+            // Total Sales
+            const totalSales = data.summary.totalSales;
+            const totalSalesElem = document.getElementById('totalSales');
+            if (!totalSales || totalSales === 0) {
+                totalSalesElem.textContent = 'No data';
+                totalSalesElem.parentElement.parentElement.style.opacity = 0.5;
+            } else {
+                totalSalesElem.textContent = '₱' + totalSales.toLocaleString(undefined, {minimumFractionDigits:2});
+                totalSalesElem.parentElement.parentElement.style.opacity = 1;
+            }
+            // Products in Stock
+            const totalProducts = data.summary.totalProducts;
+            const totalProductsElem = document.getElementById('totalProducts');
+            if (!totalProducts || totalProducts === 0) {
+                totalProductsElem.textContent = 'No data';
+                totalProductsElem.parentElement.parentElement.style.opacity = 0.5;
+            } else {
+                totalProductsElem.textContent = totalProducts;
+                totalProductsElem.parentElement.parentElement.style.opacity = 1;
+            }
+            // Pending Deliveries
+            const totalDeliveries = data.summary.totalDeliveries;
+            const totalDeliveriesElem = document.getElementById('totalDeliveries');
+            if (!totalDeliveries || totalDeliveries === 0) {
+                totalDeliveriesElem.textContent = 'No data';
+                totalDeliveriesElem.parentElement.parentElement.style.opacity = 0.5;
+            } else {
+                totalDeliveriesElem.textContent = totalDeliveries;
+                totalDeliveriesElem.parentElement.parentElement.style.opacity = 1;
+            }
+            // Growth Rate
+            const growthRate = data.summary.growthRate;
+            const growthRateElem = document.getElementById('growthRate');
+            if (!growthRate || growthRate === 0) {
+                growthRateElem.textContent = 'No data';
+                growthRateElem.parentElement.parentElement.style.opacity = 0.5;
+            } else {
+                growthRateElem.textContent = growthRate + '%';
+                growthRateElem.parentElement.parentElement.style.opacity = 1;
+            }
+        });
 
     // Sales Trends Chart
-    new Chart(document.getElementById('salesChart'), {
-        type: 'line',
-        data: {
-            labels: sampleData.salesTrends.labels,
-            datasets: [{
-                label: 'Sales Amount',
-                data: sampleData.salesTrends.data,
-                borderColor: '#388e3c',
-                backgroundColor: 'rgba(56,142,60,0.08)',
-                tension: 0.4,
-                pointBackgroundColor: '#388e3c',
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { 
-                legend: { 
-                    display: true,
-                    position: 'bottom'
-                }
-            },
-            scales: {
-                y: { 
-                    beginAtZero: true, 
-                    ticks: { color: '#205225' }
+    fetch('/api/sales/trends')
+        .then(res => res.json())
+        .then(data => {
+            const ctx = document.getElementById('salesChart');
+            if (!data.labels.length || !data.data.length) {
+                ctx.parentElement.innerHTML = '<div class="text-muted text-center">No data</div>';
+                return;
+            }
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.labels.map(label => {
+                        const date = new Date(label);
+                        return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+                    }),
+                    datasets: [{
+                        label: 'Sales Amount',
+                        data: data.data,
+                        borderColor: '#388e3c',
+                        backgroundColor: 'rgba(56,142,60,0.08)',
+                        tension: 0.4,
+                        pointBackgroundColor: '#388e3c',
+                        fill: true
+                    }]
                 },
-                x: { 
-                    ticks: { 
-                        color: '#205225',
-                        maxRotation: 45,
-                        minRotation: 45
+                options: {
+                    plugins: { legend: { display: true } },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { color: '#205225' } },
+                        x: { ticks: { color: '#205225' } }
                     }
                 }
-            }
-        }
-    });
+            });
+        });
 
     // Inventory Status Chart
-    new Chart(document.getElementById('inventoryChart'), {
-        type: 'bar',
-        data: {
-            labels: sampleData.inventoryStatus.products.map(p => p.name),
-            datasets: [{
-                label: 'Current Stock',
-                data: sampleData.inventoryStatus.products.map(p => p.quantity),
-                backgroundColor: '#8bc34a',
-                borderRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { 
-                legend: { 
-                    display: true,
-                    position: 'bottom'
-                }
-            },
-            scales: {
-                y: { 
-                    beginAtZero: true, 
-                    ticks: { color: '#205225' }
+    fetch('/api/inventory/status')
+        .then(res => res.json())
+        .then(data => {
+            const ctx = document.getElementById('inventoryChart');
+            if (!data.products.length) {
+                ctx.parentElement.innerHTML = '<div class="text-muted text-center">No data</div>';
+                return;
+            }
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.products.map(p => p.name),
+                    datasets: [{
+                        label: 'Current Stock',
+                        data: data.products.map(p => p.quantity),
+                        backgroundColor: '#8bc34a',
+                        borderRadius: 6
+                    }]
                 },
-                x: { 
-                    ticks: { 
-                        color: '#205225',
-                        maxRotation: 45,
-                        minRotation: 45
+                options: {
+                    plugins: { legend: { display: true } },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { color: '#205225' } },
+                        x: { ticks: { color: '#205225' } }
                     }
                 }
-            }
-        }
-    });
+            });
+        });
 
-    // Delivery Status Chart
-    new Chart(document.getElementById('deliveryChart'), {
-        type: 'doughnut',
-        data: {
-            labels: ['Pending', 'In Transit', 'Delivered'],
-            datasets: [{
-                data: [
-                    sampleData.deliveryStatus.pending,
-                    sampleData.deliveryStatus.inTransit,
-                    sampleData.deliveryStatus.delivered
-                ],
-                backgroundColor: ['#e53935', '#fbc02d', '#43a047'],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { 
-                legend: { 
-                    display: true,
-                    position: 'bottom'
-                }
-            },
-            layout: {
-                padding: {
-                    top: 20,
-                    bottom: 20
-                }
+    // Delivery Status Donut Chart
+    fetch('/api/deliveries/status')
+        .then(res => res.json())
+        .then(data => {
+            const ctx = document.getElementById('deliveryChart');
+            if ((data.pending + data.inTransit + data.delivered) === 0) {
+                ctx.parentElement.innerHTML = '<div class="text-muted text-center">No data</div>';
+                return;
             }
-        }
-    });
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pending', 'In Transit', 'Delivered'],
+                    datasets: [{
+                        data: [data.pending, data.inTransit, data.delivered],
+                        backgroundColor: ['#e53935', '#fbc02d', '#43a047'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    plugins: { 
+                        legend: { 
+                            display: true,
+                            position: 'bottom'
+                        }
+                    },
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    layout: {
+                        padding: {
+                            top: 20,
+                            bottom: 20
+                        }
+                    }
+                }
+            });
+        });
 
-    // Growth Forecast Chart
-    new Chart(document.getElementById('growthChart'), {
-        type: 'radar',
-        data: {
-            labels: sampleData.growthMetrics.labels,
-            datasets: [{
-                label: 'Growth Metrics',
-                data: sampleData.growthMetrics.data,
-                backgroundColor: 'rgba(56,142,60,0.15)',
-                borderColor: '#388e3c',
-                pointBackgroundColor: '#388e3c'
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { 
-                legend: { 
-                    display: true,
-                    position: 'bottom'
-                }
-            },
-            layout: {
-                padding: {
-                    top: 20,
-                    bottom: 20
-                }
-            },
-            scales: {
-                r: {
-                    angleLines: { color: '#205225' },
-                    pointLabels: { color: '#205225' },
-                    grid: { color: '#e0e0e0' },
-                    ticks: { color: '#205225', beginAtZero: true }
-                }
+    // Growth Forecast Radar Chart
+    fetch('/api/growth/metrics')
+        .then(res => res.json())
+        .then(data => {
+            const ctx = document.getElementById('growthChart');
+            if (!data.data.length) {
+                ctx.parentElement.innerHTML = '<div class="text-muted text-center">No data</div>';
+                return;
             }
-        }
-    });
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Growth Metrics',
+                        data: data.data,
+                        backgroundColor: 'rgba(56,142,60,0.15)',
+                        borderColor: '#388e3c',
+                        pointBackgroundColor: '#388e3c'
+                    }]
+                },
+                options: {
+                    plugins: { 
+                        legend: { 
+                            display: true,
+                            position: 'bottom'
+                        }
+                    },
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    layout: {
+                        padding: {
+                            top: 20,
+                            bottom: 20
+                        }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: { color: '#205225' },
+                            pointLabels: { color: '#205225' },
+                            grid: { color: '#e0e0e0' },
+                            ticks: { color: '#205225', beginAtZero: true }
+                        }
+                    }
+                }
+            });
+        });
 </script>
 </body>
 </html>
