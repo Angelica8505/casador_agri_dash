@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: Agricultural Dashboard API
+  version: 1.0.0
+  description: API documentation for the Agricultural Dashboard application
+
+servers:
+  - url: http://localhost:3000
+    description: Development server
+
+paths:
+  /api/dashboard/summary:
+    get:
+      summary: Get dashboard summary
+      tags: [Dashboard]
+      responses:
+        '200':
+          description: Dashboard summary data
+
+  /api/sales:
+    get:
+      summary: Get sales data
+      tags: [Sales]
+      responses:
+        '200':
+          description: Sales data
+
+  /api/inventory:
+    get:
+      summary: Get inventory data
+      tags: [Inventory]
+      responses:
+        '200':
+          description: Inventory data
+
+  /api/deliveries:
+    get:
+      summary: Get delivery data
+      tags: [Deliveries]
+      responses:
+        '200':
+          description: Delivery data
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 

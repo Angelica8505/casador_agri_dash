@@ -1,0 +1,13 @@
+{
+  "name": "agricultural-dashboard",
+  "version": "1.0.0",
+  "description": "Simple Agricultural Dashboard",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.14.1"
+  }
+}

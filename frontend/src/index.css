@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-background-default text-text-primary font-sans;
+}
+
+/* Agricultural-themed card styles */
+.agri-card {
+  @apply bg-background-paper rounded-lg shadow-md border border-background-dark p-6;
+  background-image: linear-gradient(to bottom right, rgba(46, 125, 50, 0.05), rgba(255, 160, 0, 0.05));
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-background-dark;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary-main rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary-dark;
+}
+
+/* Table styles */
+.agri-table {
+  @apply min-w-full;
+}
+
+.agri-table th {
+  @apply px-4 py-2 text-left text-text-primary bg-background-dark font-semibold;
+}
+
+.agri-table td {
+  @apply px-4 py-2 text-text-secondary border-b border-background-dark;
+}
+
+.agri-table tr:hover {
+  @apply bg-background-dark;
+}
+
+/* Chart container styles */
+.chart-container {
+  @apply relative h-[300px] w-full;
+}
+
+/* Agricultural-themed button styles */
+.agri-button {
+  @apply px-4 py-2 rounded-md font-medium transition-colors duration-200;
+}
+
+.agri-button-primary {
+  @apply bg-primary-main text-white hover:bg-primary-dark;
+}
+
+.agri-button-secondary {
+  @apply bg-secondary-main text-white hover:bg-secondary-dark;
+}
+
+/* Agricultural-themed input styles */
+.agri-input {
+  @apply px-4 py-2 rounded-md border border-background-dark focus:border-primary-main focus:ring-1 focus:ring-primary-main outline-none;
+}
+
+/* Agricultural-themed badge styles */
+.agri-badge {
+  @apply px-2 py-1 rounded-full text-sm font-medium;
+}
+
+.agri-badge-success {
+  @apply bg-success/10 text-success;
+}
+
+.agri-badge-warning {
+  @apply bg-warning/10 text-warning;
+}
+
+.agri-badge-error {
+  @apply bg-error/10 text-error;
+}
+
+/* Agricultural-themed loading spinner */
+.agri-spinner {
+  @apply w-8 h-8 border-4 border-primary-light border-t-primary-main rounded-full animate-spin;
+} 
